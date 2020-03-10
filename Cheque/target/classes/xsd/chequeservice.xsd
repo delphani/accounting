@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:c="https://api.middleeastbank.net/cheque/chequeService" elementFormDefault="qualified" targetNamespace="https://api.middleeastbank.net/cheque/chequeService" version="1.0">
+
+  <xs:element name="returnChequeInstantRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="bank" type="xs:string"/>
+        <xs:element name="branch" type="xs:string"/>
+        <xs:element name="requestId" type="xs:string"/>
+        <xs:element name="userCode" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="returnChequeInstantResponse" type="c:returnChequeInstantResponse"/>
+
+  <xs:complexType name="responseError">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorDesc" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="returnChequeInstantResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="returnValue" type="xs:string"/>
+      <xs:element name="hasError" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="errors">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="error" type="c:responseError"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

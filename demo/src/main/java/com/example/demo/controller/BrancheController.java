@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.ExeptionHandeling.ObjectNotEmpty;
+import com.example.demo.controller.exception.ObjectNotEmpty;
 import com.example.demo.controller.validitor.BrancheValiditor;
-import com.example.demo.model.entity.Branche;
-import com.example.demo.model.service.BranchService;
+import com.example.demo.entity.Branche;
+import com.example.demo.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;

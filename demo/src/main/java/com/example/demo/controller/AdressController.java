@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.ExeptionHandeling.AdressNotFoundExeption;
-import com.example.demo.controller.ExeptionHandeling.ObjectNotEmpty;
+import com.example.demo.controller.exception.AdressNotFoundExeption;
+import com.example.demo.controller.exception.ObjectNotEmpty;
 import com.example.demo.controller.validitor.AdressValiditor;
-import com.example.demo.model.entity.Adress;
-import com.example.demo.model.service.AdressService;
+import com.example.demo.model.MessageModel;
+import com.example.demo.entity.Adress;
+import com.example.demo.service.AdressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/adress")
-public class AdressController implements ControllerInterface<Adress> {
+public class AdressController {
 
     @Autowired
     AdressService adressService;
@@ -28,24 +29,24 @@ public class AdressController implements ControllerInterface<Adress> {
 
 
     @PostMapping("/save")
-    @Override
-    public void save(@RequestBody Adress entity, BindingResult  bindingResult) {
+    public MessageModel save(@RequestBody Adress entity, BindingResult  bindingResult) {
 
+        try {
             adressValiditor.validate(entity,bindingResult);
             if(bindingResult.hasErrors())
                 throw new ObjectNotEmpty(bindingResult.getAllErrors().toString()) ;
 
             adressService.save(entity);
-            /*Adress savedAdress=adressService.save(entity);
-            URI url = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(savedAdress.getId()).toUri();
-            return ResponseEntity.created(url).build();*/
-
+            return new MessageModel(false, "SUCCESS");
+        }
+        catch (Exception e){
+            return new MessageModel(true, e.getMessage());
+        }
     }
 
 
 
     @PostMapping("/update")
-    @Override
     public void update(@RequestBody Adress entity, BindingResult  bindingResult) {
         adressValiditor.validate(entity,bindingResult);
         if(bindingResult.hasErrors())
@@ -55,7 +56,6 @@ public class AdressController implements ControllerInterface<Adress> {
     }
 
     @DeleteMapping("/delete/{id}")
-    @Override
     public void delete(@PathVariable long id) {
         try {
             adressService.delete(id);
@@ -67,7 +67,6 @@ public class AdressController implements ControllerInterface<Adress> {
     }
 
     @GetMapping("/findAll")
-    @Override
     public List<Adress> findAll() {
         try {
             return adressService.selectAll();
@@ -79,7 +78,6 @@ public class AdressController implements ControllerInterface<Adress> {
     }
 
     @GetMapping("/{id}")
-    @Override
     public Adress findById(@PathVariable  Long id) {
 
             Optional<Adress> adress = Optional.ofNullable(adressService.selectById(id));

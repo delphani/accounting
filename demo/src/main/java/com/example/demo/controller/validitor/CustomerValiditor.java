@@ -1,6 +1,6 @@
 package com.example.demo.controller.validitor;
 
-import com.example.demo.model.entity.Customer;
+import com.example.demo.entity.Customer;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
