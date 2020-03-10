@@ -8,12 +8,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
-/**
- * Company DSA
- *
- * @author A.Fallah
- * Date: 1/7/2020
- */
 @SpringBootApplication
 @ServletComponentScan
 public class SpringBootWebApplication extends SpringBootServletInitializer {
